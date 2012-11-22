@@ -11,7 +11,7 @@
 #include <vector>
 #include <map>
 #include <string>
-
+#include <ostream>
 #include <boost/variant.hpp>
 
 class Field
@@ -63,6 +63,11 @@ public:
 	//returns the retrieved field
 	Field& appendField(const std::string& name);
 	Field& getField(const std::string& name);
+
+	//pretty print
+	void print(std::ostream& stream) const;
 };
+
+std::ostream& operator<<(std::ostream& stream, const Field& field);
 
 #endif /* FIELD_H_ */

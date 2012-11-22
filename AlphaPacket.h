@@ -32,16 +32,16 @@ public:
 	//Gets an interface to a mode. Switches to and initializes that mode, if
 	//necessary
 	template<class T>
-	T Mode()
+	T Command()
 	{
-		T modeInterface(*this);
+		T command(*this);
 		if(mode != T::commandCode)
 		{
 			mode = T::commandCode;
-			modeInterface->initMode();
+			command.initCommand();
 		}
 
-		return modeInterface;
+		return command;
 	}
 };
 

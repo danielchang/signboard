@@ -11,6 +11,8 @@
 #include <iostream>
 
 #include "Field.h"
+#include "AlphaPacket.h"
+#include "Commands/WriteText.h"
 
 using namespace std;
 
@@ -52,4 +54,9 @@ int main(int argc, char **argv)
 	field.getField("middle").clear().appendCharacterArray("abcd");
 	cout << "\tShould be: 'abcdabcdijkl'\n";
 	cout << "\tResult   : '" << field.resolveToString() << "'\n";
+
+	cout << "Testing Write Command\n";
+	AlphaPacket packet;
+	packet.Command<WriteText>().setFileLabel('A').setMessage("Hello World!");
+	cout << "Pretty Printing\n" << packet << '\n';
 }

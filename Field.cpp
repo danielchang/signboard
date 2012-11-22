@@ -78,3 +78,20 @@ Field& Field::getField(const std::string& name)
 {
 	return boost::get<Field>(content[fieldNames.at(name)]);
 }
+
+void Field::print(std::ostream& stream) const
+{
+	stream << *this;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Field& field)
+{
+	auto characters = field.resolve();
+
+	for(char character : characters)
+	{
+		stream << '(' << (int)character << ")\t" << character << '\n';
+	}
+
+	return stream;
+}

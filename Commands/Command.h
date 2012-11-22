@@ -15,41 +15,39 @@
 
 #include "../AlphaPacket.h"
 
-/*
- *
- */
-template<char code>
-class Mode
+template<char command>
+class Command
 {
 private:
 	friend class AlphaPacket;
 	AlphaPacket* const packet;
 
-	Mode(AlphaPacket& packet):
-		packet(&packet)
-	{}
-
-	virtual void initModeSpecific() =0;
+	virtual void initCommandSpecific() =0;
 
 	//Called by the AlphaPacket, if it isn't in this mode at construction time
-	void initMode()
+	void initCommand()
 	{
 		packet->commandCode()
 				.clear()
-				.appendCharacter(code);
-		initModeSpecific();
+				.appendCharacter(command);
+		initCommandSpecific();
 	}
 
 protected:
+	//Constructor is protected, so inherited classes can invoke it
+	Command(AlphaPacket& packet):
+		packet(&packet)
+	{}
+
 	Field& dataField()
 	{
 		return packet->dataField();
 	}
 
 public:
-	virtual ~Mode() {}
+	virtual ~Command() {}
 
-	const static char controlCode = code;
+	const static char commandCode = command;
 };
 
 #endif /* MODE_H_ */
