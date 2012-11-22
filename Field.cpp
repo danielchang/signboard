@@ -9,8 +9,9 @@
 
 #include <algorithm>
 
-struct PacketBuilder : public boost::static_visitor<>
+class BufferBuilder : public boost::static_visitor<>
 {
+public:
 	std::vector<char> workingPacket;
 
 	void operator()(const char& character)
@@ -27,7 +28,7 @@ struct PacketBuilder : public boost::static_visitor<>
 
 std::vector<char> Field::resolve() const
 {
-	PacketBuilder builder;
+	BufferBuilder builder;
 	auto visitor = boost::apply_visitor(builder);
 
 	for(auto& subfield : content)

@@ -4,14 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../AlphaException.cpp \
+../AlphaPacket.cpp \
 ../Field.cpp \
 ../main.cpp 
 
 OBJS += \
+./AlphaException.o \
+./AlphaPacket.o \
 ./Field.o \
 ./main.o 
 
 CPP_DEPS += \
+./AlphaException.d \
+./AlphaPacket.d \
 ./Field.d \
 ./main.d 
 

@@ -18,8 +18,16 @@ class Field
 {
 private:
 	typedef boost::variant<char, Field> FieldPiece;
-	std::map<std::string, unsigned> fieldNames;
+
+	//TODO: optimize for contiguous character sequences.
+	//Perhaps FieldPiece = variant<string, Field>?
 	std::vector<FieldPiece> content;
+
+	//map<Field Name, Field Index>
+	std::map<std::string, unsigned> fieldNames;
+	//TODO: Weigh the difference between vector, map, and unordered map.
+	//Went with map for now because of built-in lookup, but vector (or some
+	//wrapper) is probably faster and smaller.
 
 public:
 	std::vector<char> resolve() const;
@@ -29,14 +37,17 @@ public:
 
 	Field& appendCharacter(char character);
 
-	//2 or more characters, with a variadic template
+	//Append 2 or more characters in sequence
 	template<typename... chars>
 	Field& appendCharacter(char character, char character2, chars... rest)
 	{
-		return appendCharacter(character).appendCharacter(character2, rest...);
+		appendCharacter(character);
+		appendCharacter(character2, rest...);
+
+		return *this;
 	}
 
-	//char* specific version. ignores terminating null.
+	//char* specific version. Ignores terminating null.
 	Field& appendCharacterArray(const char* chars);
 
 	//generic version, for vectors, strings, etc.
@@ -48,6 +59,8 @@ public:
 		return *this;
 	}
 
+	//Don't let the similar signatures fool you- append returns *this, and get
+	//returns the retrieved field
 	Field& appendField(const std::string& name);
 	Field& getField(const std::string& name);
 };
