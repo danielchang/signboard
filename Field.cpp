@@ -28,8 +28,10 @@ struct PacketBuilder : public boost::static_visitor<>
 std::vector<char> Field::resolve() const
 {
 	PacketBuilder builder;
+	auto visitor = boost::apply_visitor(builder);
 
-	std::for_each(content.cbegin(), content.cend(), boost::apply_visitor(builder));
+	for(auto& subfield : content)
+		visitor(subfield);
 
 	return builder.workingPacket;
 }
@@ -41,27 +43,37 @@ std::string Field::resolveToString() const
 	return std::string(resolved.data(), resolved.size());
 }
 
-void Field::clear()
+Field& Field::clear()
 {
 	fieldNames.clear();
 	content.clear();
+
+	return *this;
 }
 
-void Field::appendCharacter(char character)
+Field& Field::appendCharacter(char character)
 {
 	content.push_back(character);
+	return *this;
 }
 
-Field& Field::appendNamedField(const std::string& name)
+Field& Field::appendField(const std::string& name)
 {
 	unsigned index = content.size();
+	fieldNames[name] = index;
 
 	content.push_back(Field());
-	fieldNames[name] = index;
-	return boost::get<Field>(content[index]);
+	return *this;
 }
 
-Field& Field::getNamedField(const std::string& name)
+Field& Field::appendCharacterArray(const char* chars)
+{
+	while(*chars != 0)
+		appendCharacter(*(chars++));
+	return *this;
+}
+
+Field& Field::getField(const std::string& name)
 {
 	return boost::get<Field>(content[fieldNames.at(name)]);
 }

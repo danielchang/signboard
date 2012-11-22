@@ -25,19 +25,31 @@ public:
 	std::vector<char> resolve() const;
 	std::string resolveToString() const;
 
-	void clear();
+	Field& clear();
 
-	void appendCharacter(char character);
+	Field& appendCharacter(char character);
 
+	//2 or more characters, with a variadic template
+	template<typename... chars>
+	Field& appendCharacter(char character, char character2, chars... rest)
+	{
+		return appendCharacter(character).appendCharacter(character2, rest...);
+	}
+
+	//char* specific version. ignores terminating null.
+	Field& appendCharacterArray(const char* chars);
+
+	//generic version, for vectors, strings, etc.
 	template<class Array>
-	void appendCharacters(Array chars)
+	Field& appendCharacterArray(const Array& chars)
 	{
 		for(char character : chars)
 			appendCharacter(character);
+		return *this;
 	}
 
-	Field& appendNamedField(const std::string& name);
-	Field& getNamedField(const std::string& name);
+	Field& appendField(const std::string& name);
+	Field& getField(const std::string& name);
 };
 
 #endif /* FIELD_H_ */
