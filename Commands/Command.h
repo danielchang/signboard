@@ -48,6 +48,11 @@ public:
 	virtual ~Command() {}
 
 	const static char commandCode = command;
+
+	std::vector<char> resolve() const
+	{
+		return packet->resolve();
+	}
 };
 
 #endif /* MODE_H_ */

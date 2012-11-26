@@ -18,6 +18,7 @@ void WriteText::initCommandSpecific()
 			.appendField("File Label")
 			.appendField("Mode Field")
 			.appendField("Text");
+	setFileLabel();
 }
 
 WriteText::~WriteText()
