@@ -13,7 +13,7 @@
 #include "FixedCodes.h"
 #include "Command.h"
 
-class WriteText : Command<commandCodes::WRITETEXT>
+class WriteText : public Command<commandCodes::WRITETEXT>
 {
 private:
 	friend class AlphaPacket;
