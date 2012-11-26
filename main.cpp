@@ -79,6 +79,6 @@ int main(int argc, char **argv)
 			.setMessage("Hello World!")
 			.resolve();
 
-	serialPort.write(rawPacket.data(), rawPacket.size());
+	serialPort.write(rawPacket.data(), rawPacket.size()).flush();
 	serialPort.close();
 }
