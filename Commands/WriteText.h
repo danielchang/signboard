@@ -19,7 +19,7 @@ private:
 	friend class AlphaPacket;
 	WriteText(AlphaPacket& packet);
 
-	void initCommandSpecific() override;
+	void initCommandSpecific();
 
 public:
 	virtual ~WriteText();
