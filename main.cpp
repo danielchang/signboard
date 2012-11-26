@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <cstdlib> //for exit()
 
 #include <iostream>
 #include <fstream>
@@ -64,6 +65,23 @@ void test()
 	cout << "Pretty Printing\n" << packet << '\n';
 }
 
+void testStream(const ios& stream)
+{
+	if(!stream.good())
+	{
+		cout << "Something went wrong!\n";
+
+		if(stream.bad())
+			cout << "\tbadbit is set\n";
+		if(stream.eof())
+			cout << "\teofbit is set\n";
+		if(stream.fail())
+			cout << "\tfailbit is set\n";
+
+		exit(1);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	//TODO: use program options
@@ -71,14 +89,19 @@ int main(int argc, char **argv)
 	if(argc == 2 && string(argv[1]) == "test")
 		test();
 
-	ofstream serialPort("/dev/ttyS0", ios_base::out | ios_base::binary);
-
 	auto rawPacket = AlphaPacket()
 			.Command<WriteText>()
 			.setFileLabel('A')
 			.setMessage("Hello World!")
 			.resolve();
 
+	cout << "Creating stream, opening serial port\n";
+	fstream serialPort("/dev/ttyS0", fstream::out | fstream::binary);
+	testStream(serialPort);
+
+	cout << "Writing packet to stream\n";
 	serialPort.write(rawPacket.data(), rawPacket.size()).flush();
+	testStream(serialPort);
+
 	serialPort.close();
 }
