@@ -9,6 +9,9 @@
 #include <string>
 
 #include <iostream>
+#include <fstream>
+
+#include <boost/program_options.hpp>
 
 #include "Field.h"
 #include "AlphaPacket.h"
@@ -16,7 +19,7 @@
 
 using namespace std;
 
-int main(int argc, char **argv)
+void test()
 {
 	cout << "Testing Fields...\n";
 
@@ -59,4 +62,23 @@ int main(int argc, char **argv)
 	AlphaPacket packet;
 	packet.Command<WriteText>().setFileLabel('A').setMessage("Hello World!");
 	cout << "Pretty Printing\n" << packet << '\n';
+}
+
+int main(int argc, char **argv)
+{
+	//TODO: use program options
+
+	if(argc == 2 && string(argv[1]) == "test")
+		test();
+
+	ofstream serialPort("/dev/ttyS0", ios_base::out | ios_base::binary);
+
+	auto rawPacket = AlphaPacket()
+			.Command<WriteText>()
+			.setFileLabel('A')
+			.setMessage("Hello World!")
+			.resolve();
+
+	serialPort.write(rawPacket.data(), rawPacket.size());
+	serialPort.close();
 }
