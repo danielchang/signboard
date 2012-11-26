@@ -8,6 +8,8 @@
 #ifndef FIXEDCODES_H_
 #define FIXEDCODES_H_
 
+//TODO: replace with enums
+
 namespace commandCodes
 {
 	const char WRITETEXT = 'A';
@@ -60,6 +62,9 @@ namespace modeCodes
 
 	namespace special
 	{
+		//Keep this character the same as the min special
+		const char min = '0';
+
 		const char TWINKLE = '0';
 		const char SPARKLE = '1';
 		const char SNOW = '2';
@@ -73,6 +78,9 @@ namespace modeCodes
 		const char NEWSFLASH = 'A';
 		const char TRUMPETANIMATION = 'B';
 		const char CYCLECOLORS = 'C';
+
+		//Keep this character the same as the max special
+		const char max = 'C';
 	}
 }
 

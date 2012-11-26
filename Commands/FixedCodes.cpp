@@ -9,5 +9,5 @@
 
 bool isSpecial(char code)
 {
-	return code >= '0' && code <= 'C';
+	return code >= modeCodes::special::min && code <= modeCodes::special::max;
 }
