@@ -85,14 +85,9 @@ int main(int argc, char **argv)
 
 	AlphaPacket packet;
 
-	packet.commandCode().appendCharacter('E');
-	packet.dataField().appendCharacter('!', '0', '0');
-
-	send(packet);
-
-	packet.dataField()
-			.clear()
-			.appendCharacter('(', '1');
+	packet.command<WriteText>()
+			.setFileLabel('0')
+			.setMessage("FUCK YOU SIGN");
 
 	send(packet);
 }
