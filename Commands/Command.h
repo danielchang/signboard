@@ -20,6 +20,8 @@ class Command
 {
 private:
 	friend class AlphaPacket;
+
+	//In case your const-correctness is fuzzy: this is a const pointer to a non-const AlphaPacket
 	AlphaPacket* const packet;
 
 	virtual void initCommandSpecific() =0;

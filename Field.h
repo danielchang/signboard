@@ -25,9 +25,11 @@ private:
 
 	//map<Field Name, Field Index>
 	std::map<std::string, unsigned> fieldNames;
-	//TODO: Weigh the difference between vector, map, and unordered map.
-	//Went with map for now because of built-in lookup, but vector (or some
-	//wrapper) is probably faster and smaller.
+	/*
+	 * TODO: Weigh the difference between vector, map, and unordered map.
+	 * Went with map for now because of built-in lookup, but vector (or some
+	 * wrapper) is probably faster and smaller.
+	 */
 
 public:
 	std::vector<char> resolve() const;
@@ -50,7 +52,8 @@ public:
 	//char* specific version. Ignores terminating null.
 	Field& appendCharacterArray(const char* chars);
 
-	//generic version, for vectors, strings, etc.
+	//generic version, for vectors, strings, etc. Does NOT ignore terminating
+	//null, even with std::string. Use string::data to get a char*.
 	template<class Array>
 	Field& appendCharacterArray(const Array& chars)
 	{

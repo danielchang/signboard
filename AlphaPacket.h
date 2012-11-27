@@ -24,15 +24,15 @@ public:
 	//default: 00. appears to be broadcast address.
 	AlphaPacket& updateAddress(char first = '0', char second = '0');
 
-	//Gets the command and data field. These aren't used directly- the various
-	//interfaces mange these themselves.
+	//Gets the command and data field. These shouldn't be used directly- the
+	//various interfaces manage these themselves.
 	Field& commandCode();
 	Field& dataField();
 
 	//Gets an interface to a mode. Switches to and initializes that mode, if
 	//necessary
 	template<class T>
-	T Command()
+	T command()
 	{
 		T command(*this);
 		if(mode != T::commandCode)

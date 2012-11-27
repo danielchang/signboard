@@ -81,17 +81,12 @@ Field& Field::getField(const std::string& name)
 
 void Field::print(std::ostream& stream) const
 {
-	stream << *this;
+	for(char character : resolve())
+		stream << '(' << (int)character << ")\t" << character << '\n';
 }
 
 std::ostream& operator<<(std::ostream& stream, const Field& field)
 {
-	auto characters = field.resolve();
-
-	for(char character : characters)
-	{
-		stream << '(' << (int)character << ")\t" << character << '\n';
-	}
-
+	field.print(stream);
 	return stream;
 }

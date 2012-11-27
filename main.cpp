@@ -61,7 +61,7 @@ void test()
 
 	cout << "Testing Write Command\n";
 	AlphaPacket packet;
-	packet.Command<WriteText>().setFileLabel('A').setMessage("Hello World!");
+	packet.command<WriteText>().setFileLabel('A').setMessage("Hello World!");
 	cout << "Pretty Printing\n" << packet << '\n';
 }
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 		test();
 
 	auto rawPacket = AlphaPacket()
-			.Command<WriteText>()
+			.command<WriteText>()
 			.setFileLabel('A')
 			.setMessage("Hello World!")
 			.resolve();
