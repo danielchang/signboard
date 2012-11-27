@@ -80,12 +80,12 @@ SerialPort::~SerialPort()
 
 bool SerialPort::write(const Field& field)
 {
+	std::cout << "Writing Packet\n" << field;
 	return write(field.resolve());
 }
 
 bool SerialPort::write(const std::vector<char>& buffer)
 {
-	//TODO: rewrite with exceptions
 	if(::write(portDescriptor, buffer.data(), buffer.size()) < 0)
 		return false;
 	return true;

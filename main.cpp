@@ -68,12 +68,12 @@ int main(int argc, char **argv)
 	if(argc == 2 && string(argv[1]) == "test")
 		test();
 
-	auto rawPacket = AlphaPacket()
-			.command<WriteText>()
+	AlphaPacket packet;
+
+	packet.command<WriteText>()
 			.setFileLabel('A')
-			.setMessage("Hello World!")
-			.resolve();
+			.setMessage("Hello World!");
 
 	SerialPort port;
-	port.write(rawPacket);
+	port.write(packet);
 }
