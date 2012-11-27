@@ -71,9 +71,8 @@ int main(int argc, char **argv)
 
 	AlphaPacket packet;
 
-	packet.command<WriteText>()
-			.setFileLabel('A')
-			.setMessage("Hello World!");
+	packet.commandCode().appendCharacter('E');
+	packet.dataField().appendCharacter('!', '0', '0');
 
 	try
 	{
