@@ -45,11 +45,13 @@ SerialPort::SerialPort(const std::string port)
 
 	/*
 	 * Serial spec reference: http://www.easysw.com/~mike/serial/serial.html#2_2
-	 * Flags:
-	 *     CLOCAL- local line. Don't change port owner. recommended by serial docs.
 	 */
+
 	std::cout << "Setting as local line\n";
 	serialConfig.c_cflag |= CLOCAL;
+
+	std::cout << "Enabling reciever\n";
+	serialConfig.c_cflag |= CREAD;
 
 	//7 data bits, even parity, 2 stop bits
 
@@ -64,7 +66,17 @@ SerialPort::SerialPort(const std::string port)
 	std::cout << "Setting non-cannonical\n";
 	serialConfig.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 
-	//TODO: flow control- software vs hardware
+	/*
+	 * The serial port documentation from the reference site seems to indicate
+	 * that a port is either hardware or software flow controled. However, the
+	 * 2 modes can be enabled or disabled separatly, and the Alpha Protocol
+	 * spec just has "None" for flow control.
+	 */
+	std::cout << "Disabling hardware flow control\n";
+	serialConfig.c_cflag &= ~CRTSCTS;
+
+	std::cout << "Disabling software flow control\n";
+	serialConfig.c_iflag &= ~(IXON | IXOFF | IXANY);
 
 	std::cout << "Applying settings\n";
 	if(tcsetattr(portDescriptor, TCSANOW, &serialConfig) < 0)
@@ -88,5 +100,4 @@ bool SerialPort::write(const std::vector<char>& buffer)
 {
 	if(::write(portDescriptor, buffer.data(), buffer.size()) < 0)
 		return false;
-	return true;
 }
