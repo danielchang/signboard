@@ -5,19 +5,14 @@
  *      Author: nathan
  */
 
-#include <cstdlib> //for exit()
 #include <iostream>
-
-//Unix file handling
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
 
 //#include <boost/program_options.hpp>
 
 #include "Field.h"
 #include "AlphaPacket.h"
 #include "Commands/WriteText.h"
+#include "Serial/SerialPort.h"
 
 using namespace std;
 
@@ -79,19 +74,6 @@ int main(int argc, char **argv)
 			.setMessage("Hello World!")
 			.resolve();
 
-	//TODO: move the ugly unix C code to a class
-	auto serialPort = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_NDELAY);
-	if(serialPort == -1)
-	{
-		cout << "Something went wrong!\n";
-		return errno;
-	}
-
-	int tryWrite = write(serialPort, rawPacket.data(), rawPacket.size());
-	if(tryWrite == -1)
-	{
-		cout << "Something went wrong!\n";
-		return errno;
-	}
-	close(serialPort);
+	SerialPort port;
+	port.write(rawPacket);
 }
