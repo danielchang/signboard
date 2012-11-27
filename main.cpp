@@ -13,6 +13,7 @@
 #include "AlphaPacket.h"
 #include "Commands/WriteText.h"
 #include "Serial/SerialPort.h"
+#include "AlphaException.h"
 
 using namespace std;
 
@@ -74,6 +75,14 @@ int main(int argc, char **argv)
 			.setFileLabel('A')
 			.setMessage("Hello World!");
 
-	SerialPort port;
-	port.write(packet);
+	try
+	{
+		SerialPort port;
+		port.write(packet);
+	}
+	catch (AlphaException& e)
+	{
+		cout << "Error: " << e.what() << endl;
+		return 1;
+	}
 }
