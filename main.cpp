@@ -62,6 +62,20 @@ void test()
 	cout << "Pretty Printing\n" << packet << '\n';
 }
 
+void send(Field& packet)
+{
+	try
+	{
+		SerialPort port;
+		port.write(packet);
+	}
+	catch (AlphaException& e)
+	{
+		cout << "Error: " << e.what() << endl;
+		throw;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	//TODO: use boost::program options
@@ -74,14 +88,11 @@ int main(int argc, char **argv)
 	packet.commandCode().appendCharacter('E');
 	packet.dataField().appendCharacter('!', '0', '0');
 
-	try
-	{
-		SerialPort port;
-		port.write(packet);
-	}
-	catch (AlphaException& e)
-	{
-		cout << "Error: " << e.what() << endl;
-		return 1;
-	}
+	send(packet);
+
+	packet.dataField()
+			.clear()
+			.appendCharacter('(', '1');
+
+	send(packet);
 }
