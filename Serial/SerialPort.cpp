@@ -41,7 +41,7 @@ SerialPort::SerialPort(const std::string port)
 		throw AlphaException("Failed to get serial attributes\n");
 
 	std::cout << "Setting baud rate\n";
-	cfsetspeed(&serialConfig, B4800);
+	cfsetspeed(&serialConfig, B9600);
 
 	/*
 	 * Serial spec reference: http://www.easysw.com/~mike/serial/serial.html#2_2
@@ -100,4 +100,5 @@ bool SerialPort::write(const std::vector<char>& buffer)
 {
 	if(::write(portDescriptor, buffer.data(), buffer.size()) < 0)
 		return false;
+	return true;
 }
