@@ -4,15 +4,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Commands/FixedCodes.cpp \
 ../Commands/WriteText.cpp 
 
 OBJS += \
-./Commands/FixedCodes.o \
 ./Commands/WriteText.o 
 
 CPP_DEPS += \
-./Commands/FixedCodes.d \
 ./Commands/WriteText.d 
 
 

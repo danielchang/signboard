@@ -19,8 +19,6 @@ class Field
 private:
 	typedef boost::variant<char, Field> FieldPiece;
 
-	//TODO: optimize for contiguous character sequences.
-	//Perhaps FieldPiece = variant<string, Field>?
 	std::vector<FieldPiece> content;
 
 	//map<Field Name, Field Index>
@@ -32,8 +30,11 @@ private:
 	 */
 
 public:
+	//Accessor functions. Use these to evaluate the fields into a single vector.
 	std::vector<char> resolve() const;
 	std::string resolveToString() const;
+	//Instead of creating a new vector like resolve, append to the argument vector
+	void resolveAppendTo(std::vector<char>& vec) const;
 
 	Field& clear();
 
@@ -43,14 +44,18 @@ public:
 	template<typename... chars>
 	Field& appendCharacter(char character, char character2, chars... rest)
 	{
+		//TODO: see if this can be collapsed to 1 function call
 		appendCharacter(character);
 		appendCharacter(character2, rest...);
 
 		return *this;
 	}
 
-	//char* specific version. Ignores terminating null.
+	//char* specific version. Appends up to and ignores terminating null.
 	Field& appendCharacterArray(const char* chars);
+
+	//append a set number of characters to the buffer
+	Field& appendCharacterArray(const char* chars, unsigned n);
 
 	//generic version, for vectors, strings, etc. Does NOT ignore terminating
 	//null, even with std::string. Use string::data to get a char*.

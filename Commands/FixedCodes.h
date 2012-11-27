@@ -86,6 +86,9 @@ namespace modeCodes
 
 //TODO: make this not like this
 //TODO: move this function to the modeCodes namespace
-bool isSpecial(char code);
+inline constexpr bool isSpecial(char code)
+{
+	return code >= modeCodes::special::min && code <= modeCodes::special::max;
+}
 
 #endif /* FIXEDCODES_H_ */

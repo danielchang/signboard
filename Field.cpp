@@ -9,32 +9,41 @@
 
 #include <algorithm>
 
+//TODO: rewrite across the board with boost::range. Lazy evaluation!
 class BufferBuilder : public boost::static_visitor<>
 {
 public:
-	std::vector<char> workingPacket;
+	std::vector<char>* const workingPacket;
+
+	BufferBuilder(std::vector<char>& packet):
+		workingPacket(&packet)
+	{}
 
 	void operator()(const char& character)
 	{
-		workingPacket.push_back(character);
+		workingPacket->push_back(character);
 	}
 
 	void operator()(const Field& field)
 	{
-		auto resolvedField = field.resolve();
-		workingPacket.insert(workingPacket.end(), resolvedField.begin(), resolvedField.end());
+		field.resolveAppendTo(*workingPacket);
 	}
 };
 
-std::vector<char> Field::resolve() const
+void Field::resolveAppendTo(std::vector<char>& vec) const
 {
-	BufferBuilder builder;
-	auto visitor = boost::apply_visitor(builder);
+	BufferBuilder builder(vec);
 
 	for(auto& subfield : content)
-		visitor(subfield);
+		boost::apply_visitor(builder, subfield);
+}
 
-	return builder.workingPacket;
+
+std::vector<char> Field::resolve() const
+{
+	std::vector<char> result;
+	resolveAppendTo(result);
+	return result;
 }
 
 std::string Field::resolveToString() const
@@ -74,8 +83,16 @@ Field& Field::appendCharacterArray(const char* chars)
 	return *this;
 }
 
+Field& Field::appendCharacterArray(const char* chars, unsigned n)
+{
+	for(; chars != (chars + n); ++chars)
+		appendCharacter(*chars);
+	return *this;
+}
+
 Field& Field::getField(const std::string& name)
 {
+	//TODO: catch the potential map out-of-range exception, throw one that is more appropriate
 	return boost::get<Field>(content[fieldNames.at(name)]);
 }
 
