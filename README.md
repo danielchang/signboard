@@ -26,6 +26,7 @@ license
 =======
 
 SignBoard - An experiment in aggregating data to an AlphaDot Sign
+
 Copyright (C) 2012 - MiMedia.com
 
 This program is free software: you can redistribute it and/or modify
