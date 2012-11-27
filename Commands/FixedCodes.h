@@ -63,7 +63,7 @@ namespace modeCodes
 	namespace special
 	{
 		//Keep this character the same as the min special
-		const char min = '0';
+		const char _min = '0';
 
 		const char TWINKLE = '0';
 		const char SPARKLE = '1';
@@ -80,15 +80,16 @@ namespace modeCodes
 		const char CYCLECOLORS = 'C';
 
 		//Keep this character the same as the max special
-		const char max = 'C';
+		const char _max = 'C';
+	}
+
+	inline constexpr bool isSpecial(char code)
+	{
+		return code >= special::_min && code <= special::_max;
 	}
 }
 
 //TODO: make this not like this
 //TODO: move this function to the modeCodes namespace
-inline constexpr bool isSpecial(char code)
-{
-	return code >= modeCodes::special::min && code <= modeCodes::special::max;
-}
 
 #endif /* FIXEDCODES_H_ */

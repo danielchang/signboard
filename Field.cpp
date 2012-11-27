@@ -7,8 +7,6 @@
 
 #include "Field.h"
 
-#include <algorithm>
-
 //TODO: rewrite across the board with boost::range. Lazy evaluation!
 class BufferBuilder : public boost::static_visitor<>
 {
