@@ -100,8 +100,18 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.18161880.1535218310" name="/" resourcePath="Alpha-American Documentation">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.75699298" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release" unusedChildren="">
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1239929408" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.748290998"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1824268040" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.430057847"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1435563237" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release.823572034"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.981866966" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release.1111908788"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.906648699" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1247022659"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.2063010322" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release.2060843182"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Serial|Commands" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Alpha-American Documentation|Serial|Commands" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Commands"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Serial"/>
 					</sourceEntries>

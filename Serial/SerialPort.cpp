@@ -75,8 +75,8 @@ SerialPort::SerialPort(const std::string port)
 	std::cout << "Disabling hardware flow control\n";
 	serialConfig.c_cflag &= ~CRTSCTS;
 
-	std::cout << "Disabling software flow control\n";
-	serialConfig.c_iflag &= ~(IXON | IXOFF | IXANY);
+	std::cout << "Enabling software flow control\n";
+	serialConfig.c_iflag |= (IXON | IXOFF | IXANY);
 
 	std::cout << "Applying settings\n";
 	if(tcsetattr(portDescriptor, TCSANOW, &serialConfig) < 0)
