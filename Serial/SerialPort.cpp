@@ -54,13 +54,12 @@ SerialPort::SerialPort(const std::string port)
 	serialConfig.c_cflag |= CREAD;
 
 	//7 data bits, even parity, 2 stop bits
-
-	std::cout << "Setting mode as 7E2\n";
+	std::cout << "Setting mode as 8N1\n";
 	serialConfig.c_cflag &= ~CSIZE; //mask all data size bits
-	serialConfig.c_cflag |= CS7; //set 7 data size bits
-	serialConfig.c_cflag |= CSTOPB; //set 2 character stop bits
+	serialConfig.c_cflag |= CS8; //set 8 data size bits
+	serialConfig.c_cflag &= ~CSTOPB; //set 1 character stop bits
 	serialConfig.c_cflag &= ~PARODD; //mask odd parity
-	serialConfig.c_cflag |= PARENB; //set even parity
+	serialConfig.c_cflag &= ~PARENB; //mask even parity
 
 	//Enable raw data. No buffering
 	std::cout << "Setting non-cannonical\n";
@@ -71,6 +70,9 @@ SerialPort::SerialPort(const std::string port)
 	 * that a port is either hardware or software flow controled. However, the
 	 * 2 modes can be enabled or disabled separatly, and the Alpha Protocol
 	 * spec just has "None" for flow control.
+	 *
+	 * I'm assuming this means no hardware flow control, because hardware flow
+	 * control depends on pins that the sign doesn't appear to use
 	 */
 	std::cout << "Disabling hardware flow control\n";
 	serialConfig.c_cflag &= ~CRTSCTS;
